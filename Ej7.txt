@@ -1,0 +1,30 @@
+package concurrente;
+
+public class Ej7 extends Thread {
+    String mensaje;
+    
+    public Ej7(String mensaje){
+        this.mensaje=mensaje;
+    }
+    
+    public void run(){
+        System.out.println("Mensaje Recibido: " + mensaje);
+    }
+    
+    
+    public static void main(String[] args) throws InterruptedException {
+        int k=0;
+        
+        while(k < 5){
+            Ej7 hilo1 = new Ej7("Ping"); 
+            Ej7 hilo2 = new Ej7("Pong");
+            hilo1.start();
+            sleep(1000);
+            hilo2.start();
+            sleep(1000);
+            k++;
+        }
+        
+    }
+    
+}

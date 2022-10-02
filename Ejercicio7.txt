@@ -1,0 +1,64 @@
+package concurrente;
+
+import static java.lang.Thread.sleep;
+
+public class Ejercicio7 {
+    
+    public static void main(String[] args) throws InterruptedException {
+        int k=0;
+        
+        while(k < 5){
+            Proceso1 hilo1 = new Proceso1("Ping"); 
+            //Proceso2 hilo2 = new Proceso2("Pong");
+            Thread hilo2 = new Thread(new Proceso2("Pong"));
+            hilo1.start();
+            hilo1.sleep(1000);
+            //sleep(1000);
+            hilo2.start();
+            sleep(1000);           
+            k++;
+        }
+        
+    }
+    
+}
+
+--------------------------------------------------------------------------------------------------
+
+package concurrente;
+
+public class Proceso1 extends Thread{
+    String mensaje;
+    
+    public Proceso1(String m){
+        this.mensaje = m;
+    }
+    
+    @Override
+    public void run(){
+        
+        System.out.println("Mensaje Recibido: " + mensaje);
+        
+    }
+    
+}
+
+--------------------------------------------------------------------------------------------------
+
+package concurrente;
+
+public class Proceso2 implements Runnable{
+    String mensaje;
+    
+    public Proceso2(String m){
+        this.mensaje = m;
+    }
+    
+    @Override
+    public void run(){
+        
+        System.out.println("Mensaje Recibido: " + mensaje);
+        
+    }
+    
+}

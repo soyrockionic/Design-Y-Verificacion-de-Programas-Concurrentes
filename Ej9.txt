@@ -1,0 +1,32 @@
+package concurrente;
+
+public class Ej9 extends Thread{
+    
+    private int id;
+    
+    public Ej9(int id){
+        this.id = id;
+    }
+    
+    public void run(){
+        System.out.println("Soy el hilo " + id);
+    }
+    
+    public static void main(String[] args) throws InterruptedException{
+        
+        Ej9[] hilos = new Ej9[5];
+        
+        for(int j=0; j < hilos.length; j++){
+            hilos[j] = new Ej9(j+1);
+            hilos[j].start();
+            
+        }
+        
+        try{
+            hilos[1].join();
+        }catch(Exception ex){}
+        System.out.println("Soy el hilo principal");
+        
+    }
+    
+}
