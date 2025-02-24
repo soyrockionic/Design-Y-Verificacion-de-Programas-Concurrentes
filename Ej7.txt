@@ -1,28 +1,41 @@
 package concurrente;
 
-public class Ej7 extends Thread {
-    String mensaje;
-    
-    public Ej7(String mensaje){
-        this.mensaje = mensaje;
-    }
-    
-    public void run(){
-        System.out.println("Mensaje Recibido: " + mensaje);
-    }
-    
-    public static void main(String[] args) throws InterruptedException {
-        int k=5;
-        
-        for(int i=0; i<k; i++){
-            Ej7 hilo1 = new Ej7("Ping"); 
-            Ej7 hilo2 = new Ej7("Pong");
-            hilo1.start();
-            Thread.sleep(500);            
-            hilo2.start();
-            Thread.sleep(1000);        
+public class Ej7{
+
+    // Clase interna para crear un hilo que imprime un mensaje con un delay
+   private static class HiloMensaje extends Thread {
+        private String mensaje;
+        private int repeticiones;
+        private int delay;
+
+        public HiloMensaje(String mensaje, int repeticiones, int delay) {
+            this.mensaje = mensaje;
+            this.repeticiones = repeticiones;
+            this.delay = delay;
         }
-        
+
+        @Override
+        public void run() {
+            for (int i = 0; i < repeticiones; i++) {
+                System.out.println("Mensaje Recibido: " + mensaje);
+                try {
+                    Thread.sleep(delay); // Pausa entre mensajes
+                } catch (InterruptedException e) {
+                    System.err.println("El hilo fue interrumpido");
+                }
+            }
+        }
     }
-    
+
+    public static void main(String[] args) throws InterruptedException {
+        int k = 5; // Número de repeticiones
+
+        // Crear hilos con diferentes delays
+        HiloMensaje hiloPing = new HiloMensaje("Ping", k, 500); // 500 ms delay
+        HiloMensaje hiloPong = new HiloMensaje("Pong", k, 800); // 800 ms delay
+
+        // Iniciar los hilos
+        hiloPing.start();
+        hiloPong.start();
+    }
 }
