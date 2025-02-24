@@ -4,61 +4,45 @@ import static java.lang.Thread.sleep;
 
 public class Ejercicio7 {
     
-    public static void main(String[] args) throws InterruptedException {
-        int k=0;
+    public static void main(String[] args) {
+        int k = 5; // Número de repeticiones
+
+        // Crear hilos con diferentes delays
+        Thread hiloPing = new Thread(new HiloMensaje("Ping", k, 500)); // 500 ms delay
+        Thread hiloPong = new Thread(new HiloMensaje("Pong", k, 800)); // 800 ms delay
+
+        // Iniciar los hilos
+        hiloPing.start();
+        hiloPong.start();
         
-        while(k < 5){
-            Proceso1 hilo1 = new Proceso1("Ping"); 
-            //Proceso2 hilo2 = new Proceso2("Pong");
-            Thread hilo2 = new Thread(new Proceso2("Pong"));
-            hilo1.start();
-            hilo1.sleep(1000);
-            //sleep(1000);
-            hilo2.start();
-            sleep(1000);           
-            k++;
+    }
+    
+}
+
+--------------------------------------------------------------------------------------------------
+
+package concurrente;
+
+public  class HiloMensaje implements Runnable{
+    private String mensaje;
+    private int repeticiones;
+    private int delay;
+
+    public HiloMensaje(String mensaje, int repeticiones, int delay) {
+        this.mensaje = mensaje;
+        this.repeticiones = repeticiones;
+        this.delay = delay;
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < repeticiones; i++) {
+            System.out.println("Mensaje Recibido: " + mensaje);
+            try {
+                Thread.sleep(delay); // Pausa entre mensajes
+            } catch (InterruptedException e) {
+                System.err.println("El hilo fue interrumpido");
+            }
         }
-        
     }
-    
-}
-
---------------------------------------------------------------------------------------------------
-
-package concurrente;
-
-public class Proceso1 extends Thread{
-    String mensaje;
-    
-    public Proceso1(String m){
-        this.mensaje = m;
-    }
-    
-    @Override
-    public void run(){
-        
-        System.out.println("Mensaje Recibido: " + mensaje);
-        
-    }
-    
-}
-
---------------------------------------------------------------------------------------------------
-
-package concurrente;
-
-public class Proceso2 implements Runnable{
-    String mensaje;
-    
-    public Proceso2(String m){
-        this.mensaje = m;
-    }
-    
-    @Override
-    public void run(){
-        
-        System.out.println("Mensaje Recibido: " + mensaje);
-        
-    }
-    
 }
