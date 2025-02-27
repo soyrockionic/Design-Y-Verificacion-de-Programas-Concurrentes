@@ -33,7 +33,10 @@ Caso 1: Pago exacto
 insertar.10 -> insertar.5 -> entregar
 
 Caso2: Pago con cambio
-insertar.10 -> insertar.10 -> entregar devolver.5
+insertar.10 -> insertar.10 -> entregar -> devolver.5
+
+Caso: Pago con cambio
+insertar.10 -> insertar.20 -> entregar -> devolver.15
 
 Caso 3: Pago con cambio
 insertar.20 -> entregar -> devolver.5
