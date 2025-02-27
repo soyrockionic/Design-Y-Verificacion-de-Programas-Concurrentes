@@ -1,0 +1,29 @@
+GAME = GAME0,  
+GAME0 = (one -> GAME2
+         | two -> GAME2
+         | three -> GAME1),  
+GAME1 = (lose -> GAME0),  
+GAME2 = (win -> GAME0).  
+
+MOVIE = MOVIE0,
+MOVIE0 = (ahead -> MOVIE1),
+MOVIE1 = (left -> MOVIE2
+          | right -> MOVIE0),
+MOVIE2 = STOP.
+
+MEETING = MEETING0,
+MEETING0 = (hello -> MEETING1),
+MEETING1 = (converse -> MEETING2),
+MEETING2 = (goodbye -> MEETING3),
+MEETING3 = STOP.
+
+PERSON = PERSON0,
+PERSON0 = (weekend -> PERSON3
+           | weekend -> PERSON1),
+PERSON1 = (skep -> PERSON2),
+PERSON2 = (work -> PERSON0),
+PERSON3 = (skeep -> PERSON4),
+PERSON4 = (play -> PERSON0
+           | shop -> PERSON0).
+
+|| SYS = (GAME || MOVIE || MEETING || PERSON).
