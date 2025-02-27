@@ -7,8 +7,10 @@ Modele la maquina como un proceso FSP.
 MAQUINA = PAGO[0],
 
 PAGO[total:0..34] = 
-    (when (total < 15) insertar[moneda:5..20] -> PAGO[total + moneda]
-     | when (total >= 15) entregar -> CAMBIO[total - 15]),
+    (when (total < 15) insertar[5] -> PAGO[total+5]
+     | when (total < 15) inserta[10] -> PAGO[total+10]
+     | when (total < 15) insertar[20] -> PAGO[total+20]
+     | when (total >= 15) entregar -> CAMBIO[total-15]),
 
 CAMBIO[restante:0..19] = 
     (when (restante >= 10) devolver[10] -> CAMBIO[restante - 10]
