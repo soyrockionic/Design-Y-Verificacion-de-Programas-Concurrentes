@@ -1,0 +1,37 @@
+Ejercicio 5: Maquina expendedora de gaseosas.
+La maquina cobra 15 centavos y acepta monedas de 5c, 10c y 20c.
+Si se paga mas, la maquina debe dar cambio.
+Modele la maquina como un proceso FSP.
+
+--------------------------------------------------------------------------------------------------
+MAQUINA = PAGO[0],
+
+PAGO[total:0..34] = 
+    (when (total < 15) insertar[moneda:5..20] -> PAGO[total + moneda]
+     | when (total >= 15) entregar -> CAMBIO[total - 15]),
+
+CAMBIO[restante:0..19] = 
+    (when (restante >= 10) devolver[10] -> CAMBIO[restante - 10]
+     | when (restante == 5) devolver[5] -> CAMBIO[0]
+     | when (restante == 0) devolver[0] -> MAQUINA).
+
+--------------------------------------------------------------------------------------------------
+
+Como funciona:
+
+1) Estado inicial: PAGO[0] (No se insertado dinero).
+2) Accion: insertar.10 --> Cambia a PAGO[10].
+3) Accion: insertar.5 --> Cambia a PAGO[15] (Ya se puede comprar).
+4) Accion: entregar -->La maquina entrega la gaseosa y se reinicia el sistema.
+5) Si se pago mas de 15: La maquina pasa a VUELTO, devuelve el cambio y se reinicia.
+
+Ejemplo de ejecucion (traza del sistema):
+
+Caso 1: Pago exacto
+insertar.10 -> insertar.5 -> entregar
+
+Caso2: Pago con cambio
+insertar.10 -> insertar.10 -> entregar devolver.5
+
+Caso 3: Pago con cambio
+insertar.20 -> entregar -> devolver.5
