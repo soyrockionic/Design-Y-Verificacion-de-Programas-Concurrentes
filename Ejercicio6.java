@@ -2,9 +2,6 @@ package concurrente;
 
 public class Ejercicio6 extends Thread {
     String mensaje;
-
-    public Ejercicio6(){
-    }
     
     public Ejercicio6(String mensaje){
         this.mensaje=mensaje;
@@ -13,7 +10,6 @@ public class Ejercicio6 extends Thread {
     public void run(){
         System.out.println("Mensaje Recibido: " + mensaje);
     }
-
     
     public static void main(String[] args) {
         Ejercicio6 hilo = new Ejercicio6("Hola Mundo");
